@@ -17,7 +17,10 @@ async function fetchImages() {
   // Fetch attempt
   try {
     const APIKey = "rBqPh876kLghdwttHN9FThwCc7njNb8MzTgTmQfz";
-    const url = `https://science.nasa.gov/wp-json/wp/v2/apod-basic/?start_date=${startInput.value}&end_date=${endInput.value}&api_key=${APIKey}`;
+    
+    const startDate = formatDate(startInput.value);
+    const endDate = formatDate(endInput.value);
+    const url = `https://science.nasa.gov/wp-json/wp/v2/apod-basic?date_from=${startDate}&date_to=${endDate}`;
 
     console.log(url);
 
@@ -37,7 +40,6 @@ async function fetchImages() {
       `;
     });
 
-    // step 5
   } catch (error) {
     console.error(error);
   }
@@ -46,4 +48,9 @@ async function fetchImages() {
 async function showLoading() {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '<div class="placeholder"><p>🔄 Loading space photos…</p></div>';
+}
+
+function formatDate(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${year.slice(2)}${month}${day}`;
 }
