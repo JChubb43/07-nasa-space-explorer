@@ -50,7 +50,7 @@ async function fetchImages() {
     
     const startDate = formatDate(startInput.value);
     const endDate = formatDate(endInput.value);
-    const url = `https://science.nasa.gov/wp-json/wp/v2/apod-basic?date_from=${startDate}&date_to=${endDate}`;
+    const url = `https://science.nasa.gov/wp-json/wp/v2/apod-basic?date_from=${startDate}&date_to=${endDate}&api_key=${encodeURIComponent(APIKey)}`;
 
     console.log(url);
 
