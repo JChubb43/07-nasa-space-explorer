@@ -1,6 +1,3 @@
-
-// NOTE: You do not need to edit this file.
-
 // NASA's APOD API only has images from June 16, 1995 onwards
 const earliestDate = '1995-06-16';
 
@@ -22,6 +19,7 @@ function setupDateInputs(startInput, endInput) {
   latestEnd.setUTCDate(latestEnd.getUTCDate() - 8);
   const latestEndDate = latestEnd.toISOString().split('T')[0];
 
+  // Setting up search limits
   startInput.min = earliestDate;
   startInput.max = latestEndDate;
   endInput.min = earliestStartDate;
@@ -33,7 +31,8 @@ function setupDateInputs(startInput, endInput) {
   startInput.value = lastWeek.toISOString().split('T')[0];
   endInput.value = today;
 
-  // Automatically adjust end date to show exactly 9 days of images
+  // Automatically adjust start / end date to show exactly 9 days of images
+  // This doesn't work for the earliest dates, as some days were skipped in the NASA archive
   startInput.addEventListener('change', () => {
     const startDate = new Date(startInput.value);
     const endDate = new Date(startDate);
@@ -43,7 +42,7 @@ function setupDateInputs(startInput, endInput) {
   endInput.addEventListener('change', () => {
     const endDate = new Date(endInput.value);
     const startDate = new Date(endDate);
-    startDate.setDate(endDate.getDate() - 7);
+    startDate.setDate(endDate.getDate() - 8);
     startInput.value = startDate < new Date(earliestDate) ? earliestDate : startDate.toISOString().split('T')[0];
   });
 }
